@@ -20,17 +20,16 @@ int	ptrtest(int function(const char *input, ...))
 {
 	int		ret = 0, ret2 = 0, i = 0;
 	FILE	*out;
-	char	test[3][200] =
+	char	test[2][200] =
 	{	"Basic p test: [%p]\n",
-		"P with 12 width: [%12p]\n",
-		"p with 15 width, 12 precision: [%15.12p]\n"};
+		"P with 12 width: [%12p]\n"};
 
 	if ((out = fopen("printf.txt", "a")) == NULL)
 		return (-1);
 	function("==== Pointer test ====\n");
 	fprintf(out, "==== Pointer test ====\n");
 	alarm(5);
-	while (i < 3)
+	while (i < 2)
 	{
 		ret = function(test[i], &g_var);
 		ret2 = fprintf(out, test[i], &g_var);
@@ -252,6 +251,48 @@ int	percenttest(int function(const char *input, ...))
 	return (0);
 }
 
+int    chartest(int function(const char *input, ...))
+{
+    int        ret = 0, ret2 = 0, i = 0;
+    FILE    *out;
+    char    test[6][100] =
+    {    "Basic char test: [%c]\n",
+        "Char 5 width: [%5c]\n",
+        "Char zero pad, 5 width: [%05c]\n",
+        "Char left align, 5 width: [%-5c]\n",
+        "Char test with 2 width, null value: [%2c]\n",
+        "Char test with null [%c] and text after\n"};
+
+    if ((out = fopen("printf.txt", "a")) == NULL)
+        return (-1);
+    function("==== Char test ====\n");
+    fprintf(out, "==== Char test ====\n");
+    alarm(5);
+    while (i < 6)
+    {
+        if (i == 4 || i == 5)
+        {
+            ret = function(test[i], 0);
+            ret2 = fprintf(out, test[i], 0);
+        }
+        else
+        {
+            ret = function(test[i], 'a');
+            ret2 = fprintf(out, test[i], 'a');
+        }
+        if (ret < 0 || ret2 < 0)
+            return (-1);
+        function("Ret: %d\n", ret);
+        fprintf(out, "Ret: %d\n", ret2);
+        i++;
+    }
+    alarm(0);
+    function("\n");
+    fprintf(out, "\n");
+    fclose(out);
+    return (0);
+}
+
 int	decimaltest(int function(const char *input, ...))
 {
 	int		ret = 0, ret2 = 0, i = 0;
@@ -333,6 +374,11 @@ int	main(int ac, char **av)
 			if (decimaltest(ft_printf) < 0)
 				return (-1);
 		}
+        if (strcmp(*av, "char") == 0)
+        {
+            if (chartest(ft_printf) < 0)
+                return (-1);
+        }
 		if (strcmp(*av, "percent") == 0)
 		{
 			if (percenttest(ft_printf) < 0)
