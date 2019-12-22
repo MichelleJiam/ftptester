@@ -153,10 +153,10 @@ int	hextest(int function(const char *input, ...))
 	char	test[6][200] =
 	{	"Basic hex test, x & X: [%x] [%X]\n",
 		"Basic hex test, negative values: [%x] [%X]\n",
-		"Hex with # flag, 10 width: [%#10x] [%#10X]\n",
-		"Hex with # flag, value zero: [%#x] [%#X]\n",
-		"Hex with # flag, 12 width, left justified: [%-#12x] [%-#12X]\n",
-		"Hex with # flag, 12 width, 11 width: [%#12.11x] [%#12.11X]\n"};
+		"Bonus - Hex with # flag, 10 width: [%#10x] [%#10X]\n",
+		"Bonus - Hex with # flag, value zero: [%#x] [%#X]\n",
+		"Bonus - Hex with # flag, 12 width, left justified: [%-#12x] [%-#12X]\n",
+		"Bonus - Hex with # flag, 12 width, 11 width: [%#12.11x] [%#12.11X]\n"};
 
 	if ((out = fopen("printf.txt", "a")) == NULL)
 		return (-1);
