@@ -1,4 +1,4 @@
-# ftptester2019
+# ftptester
 Unit tester for 42's ft_printf project (new curriculum).
 
 Makefile SRCPATH should be updated before use.
