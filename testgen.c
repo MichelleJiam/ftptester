@@ -6,7 +6,7 @@
 /*   By: mjiam <mjiam@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/20 14:12:52 by mjiam          #+#    #+#                */
-/*   Updated: 2019/12/28 16:15:13 by mjiam         ########   odam.nl         */
+/*   Updated: 2019/12/28 16:50:45 by mjiam         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -444,6 +444,38 @@ int	decimaltest(int function(const char *input, ...))
 	return (0);
 }
 
+int	nulltest(int function(const char *input, ...))
+{
+	int		ret = 0, ret2 = 0, i = 0;
+	FILE	*out;
+	char	test[4][100] =
+	{	"Null basic: [%]\n",
+		"Null 5 width: [%5]\n",
+		"Null 5 width, zero pad: [%05]\n",
+		"Null 5 width, zero pad, left: [%-05]"};
+
+	if ((out = fopen("printf.txt", "a")) == NULL)
+		return (-1);
+	function("==== Null test ====\n");
+	fprintf(out, "==== Null test ====\n");
+	alarm(5);
+	while (i < 4)
+	{
+		ret = function(test[i]);
+		ret2 = fprintf(out, test[i], 0);
+		if (ret < 0 || ret2 < 0)
+			return (-1);
+		function("Ret: %d\n", ret);
+		fprintf(out, "Ret: %d\n", ret2);
+		i++;
+	}
+	alarm(0);
+	function("\n");
+	fprintf(out, "\n");
+	fclose(out);
+	return (0);
+}
+
 int	main(int ac, char **av)
 {
 	av++;
@@ -488,6 +520,11 @@ int	main(int ac, char **av)
 		if (strcmp(*av, "nstore") == 0)
 		{
 			if (ntest(ft_printf) < 0)
+				return (-1);
+		}
+		if (strcmp(*av, "null")  == 0)
+		{
+			if (nulltest(ft_printf) < 0)
 				return (-1);
 		}
 	}
