@@ -2,7 +2,7 @@ NAME 	= test
 
 OUT 	= functionoutput
 
-SRCPATH = /Users/mjiam/Desktop/42/printf_project/ft_printf
+SRCPATH = ../ft_printf
 
 LIB		= $(SRCPATH)/libftprintf.a
 
@@ -108,7 +108,9 @@ $(NAME):
 	@echo "      ~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*"
 	@echo ""
 
-tests: $(LIB) $(TESTALL) pikachu pass
+tests: $(LIB) $(TESTALL)
+	@$(MAKE) pikachu
+	@$(MAKE) pass
 
 run: $(OUT_GEN) $(LIB)
 	@echo "$(PINK)Compiling files"
@@ -123,29 +125,37 @@ run: $(OUT_GEN) $(LIB)
 $(LIB):
 	@cd $(SRCPATH) && $(MAKE)
 
-dec: clean
+dec: sfclean
 	@$(MAKE) run WITH_DEC=1
+	@$(MAKE) sclean
 
-char: clean
+char: sfclean
 	@$(MAKE) run WITH_CHAR=1
+	@$(MAKE) sclean
 
-str: clean
+str: sfclean
 	@$(MAKE) run WITH_STR=1
+	@$(MAKE) sclean
 
-per: clean
+per: sfclean
 	@$(MAKE) run WITH_PER=1
+	@$(MAKE) sclean
 
-hex: clean
+hex: sfclean
 	@$(MAKE) run WITH_HEX=1
+	@$(MAKE) sclean
 
-u: clean
+u: sfclean
 	@$(MAKE) run WITH_UINT=1
+	@$(MAKE) sclean
 
-n: clean
+n: sfclean
 	@$(MAKE) run WITH_N=1
+	@$(MAKE) sclean
 
-ptr: clean
+ptr: sfclean
 	@$(MAKE) run WITH_PTR=1
+	@$(MAKE) sclean
 
 open: $(P_OUT) $(FT_OUT)
 	@open $(P_OUT) $(FT_OUT)
@@ -175,6 +185,16 @@ fclean: clean
 	@echo "$(BATH) $(CYAN)Clean af $(BATH)"
 	@rm -f $(FT_OUT) $(P_OUT)
 	@echo "$(GO) $(GREEN)Heading to the library $(GO)"
+	@cd $(SRCPATH) && $(MAKE) fclean
+
+# silent cleaning
+
+sclean:
+	@rm -f $(NAME)
+	@cd $(SRCPATH) && $(MAKE) clean
+
+sfclean: sclean
+	@rm -f $(FT_OUT) $(P_OUT)
 	@cd $(SRCPATH) && $(MAKE) fclean
 
 re:

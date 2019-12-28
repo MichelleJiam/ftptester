@@ -6,7 +6,7 @@
 /*   By: mjiam <mjiam@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/18 20:32:57 by mjiam          #+#    #+#                */
-/*   Updated: 2019/12/21 20:52:37 by mjiam         ########   odam.nl         */
+/*   Updated: 2019/12/27 20:49:08 by mjiam         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 #include <string.h>
 #include <fcntl.h>
 #include <time.h>
-#include <stdbool.h>
+#include <limits.h>
+#include <locale.h>
 
 #ifndef TEST_H
 # define TEST_H

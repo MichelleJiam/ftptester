@@ -41,8 +41,7 @@ int main()
 	else
 	{
 		printf("---- Output is not equal. ----\n");
-		linenum = (linenum / 2 != 0 ? linenum / 2 + 1 : linenum / 2);
-		printf("Test number: %d\nFunction output: %s\nPrintf output: %s\n",
+		printf("Line number: %d\nFunction output: %s\nPrintf output: %s\n",
 		linenum, fnline, printfline);
 	}
 	free(fnline);
