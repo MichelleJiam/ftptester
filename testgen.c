@@ -6,7 +6,7 @@
 /*   By: mjiam <mjiam@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/20 14:12:52 by mjiam          #+#    #+#                */
-/*   Updated: 2019/12/28 16:50:45 by mjiam         ########   odam.nl         */
+/*   Updated: 2019/12/29 16:06:48 by mjiam         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,22 +77,26 @@ int	uinttest(int function(const char *input, ...))
 {
 	int		ret = 0, ret2 = 0, i = 0;
 	FILE	*out;
-	char	test[16][100] =
+	char	test[20][100] =
 	{	"Number precision 4 test: [%.4u], [%.4u]\n",
 		"Number zero pad, 5 width: [%05u], [%05u]\n",
 		"Number zero pad, left: [%-04u], [%-04u]\n",
-		"Number precision 0 with non-zero value test: [%5.0u], [%5.0u]\n",
-		"Number precision 0 with value 0 test: [%.0u], [%.0u]\n",
+		"Number 5 width, precision 0 with non-zero value test: [%5.0u], [%5.0u]\n",
+		"Number 5 width precision 0 with value 0 test: [%5.0u], [%5.0u]\n",
 		"Number 5 width, 3 precision test: [%5.3u], [%5.3u]\n",
 		"Number 5 width, 4 precision test: [%5.4u], [%5.4u]\n",
-		"Number with minus 6 width, 4 precision test: [%-6.4u], [%-6.4u]\n",
-		"Number with * width: [%*u], [%*u]\n",
-		"Unsigned int min test, 12 width, 11 precision: [%12.11u]\n",
-		"Unsigned int max test, 12 width, 11 precision: [%12.11u]\n",
+		"Number with left, 6 width, 4 precision test: [%-6.4u], [%-6.4u]\n",
+		"Number with * (5) width: [%*u], [%*u]\n",
+		"Number with * (-5) width: [%*u], [%*u]\n",
+		"Number with * (-5) precision: [%.*u], [%.*u]\n",
+		"Number with * (-5) precision, zero value: [%.*u], [%.*u]\n",
+		"Number with * (0) precision, zero value: [%.*u], [%.*u]\n",
+		"Int min test, 12 width, 11 precision: [%12.11u]\n",
+		"Int max test, 12 width, 11 precision: [%12.11u]\n",
 		"Bonus - Number space flag  test: [% u], [% u]\n",
-		"Bonus - Number + flag, 5 width test: [%+5u], [%5u]\n",
-		"Bonus - Number with + flag, 6 width, 4 precision test: [%+6.4u], [%+6.4u]\n",
-		"Bonus - Number with space flag, 6 width, 4 precision test: [% 6.4u], [% 6.4u]\n",
+		"Bonus - Number with plus, 5 width test: [%+5u], [%+5u]\n",
+		"Bonus - Number with plus 6 width, 4 precision test: [%+6.4u], [%+6.4u]\n",
+		"Bonus - Number with space 6 width, 4 precision test: [% 6.4u], [% 6.4u]\n",
 		"Bonus - Apostrophe test with u: [%'u]\n"};
 
 	if ((out = fopen("printf.txt", "a")) == NULL)
@@ -100,9 +104,9 @@ int	uinttest(int function(const char *input, ...))
 	function("==== Unsigned Decimal test ====\n");
 	fprintf(out, "==== Unsigned Decimal test ====\n");
 	alarm(5);
-	while (i < 11)
+	while (i < 15)
 	{
-		if (i == 2){
+		if (i == 4){
 			ret = function(test[i], 0, 0);
 			ret2 = fprintf(out, test[i], 0, 0);
 		}
@@ -111,10 +115,26 @@ int	uinttest(int function(const char *input, ...))
 			ret2 = fprintf(out, test[i], 5, 456, 5, -456);
 		}
 		else if (i == 9){
+			ret = function(test[i], -5, 456, -5, -456);
+			ret2 = fprintf(out, test[i], -5, 456, -5, -456);
+		}
+		else if (i == 10){
+			ret = function(test[i], -5, 456, -5, -456);
+			ret2 = fprintf(out, test[i], -5, 456, -5, -456);
+		}
+		else if (i == 11){
+			ret = function(test[i], -5, 0, -5, 0);
+			ret2 = fprintf(out, test[i], -5, 0, -5, 0);
+		}
+		else if (i == 12){
+			ret = function(test[i], 0, 0, 0, 0);
+			ret2 = fprintf(out, test[i], 0, 0, 0, 0);
+		}
+		else if (i == 13){
 			ret = function(test[i], 0);
 			ret2 = fprintf(out, test[i], 0);
 		}
-		else if (i == 10){
+		else if (i == 14){
 			ret = function(test[i], UINT_MAX);
 			ret2 = fprintf(out, test[i], UINT_MAX);
 		}
@@ -128,9 +148,9 @@ int	uinttest(int function(const char *input, ...))
 		fprintf(out, "Ret: %d\n", ret2);
 		i++;
 	}
-	while (i < 16)
+	while (i < 20)
 	{
-		if (i == 15)
+		if (i == 19)
 		{
 			ret = function(test[i], UINT_MAX);
 			ret2 = fprintf(out, test[i], UINT_MAX);
@@ -157,22 +177,24 @@ int	hextest(int function(const char *input, ...))
 {
 	int		ret = 0, ret2 = 0, i = 0;
 	FILE	*out;
-	char	test[6][200] =
+	char	test[8][200] =
 	{	"Basic hex test, x & X: [%x] [%X]\n",
 		"Basic hex test, negative values: [%x] [%X]\n",
-		"Hex with # flag, 10 width: [%#10x] [%#10X]\n",
-		"Hex with # flag, value zero: [%#x] [%#X]\n",
-		"Hex with # flag, 12 width, left justified: [%-#12x] [%-#12X]\n",
-		"Hex with # flag, 12 width, 11 width: [%#12.11x] [%#12.11X]\n"};
+		"Hex with 8 width, 5 precision, value zero: [%8.5x] [%8.5X]\n",
+		"Hex with 8 width, 0 precision, value zero: [%8.0x] [%8.0X]\n",
+		"Bonus - Hex with # flag, 10 width: [%#10x] [%#10X]\n",
+		"Bonus - Hex with # flag, value zero: [%#x] [%#X]\n",
+		"Bonus - Hex with # flag, 12 width, left justified: [%-#12x] [%-#12X]\n",
+		"Bonus - Hex with # flag, 12 width, 11 width: [%#12.11x] [%#12.11X]\n"};
 
 	if ((out = fopen("printf.txt", "a")) == NULL)
 		return (-1);
 	function("==== Hex test ====\n");
 	fprintf(out, "==== Hex test ====\n");
 	alarm(5);
-	while (i < 6)
+	while (i < 8)
 	{
-		if (i == 3){
+		if (i == 2 || i == 3 || i == 5){
 			ret = function(test[i], 0, 0);
 			ret2 = fprintf(out, test[i], 0, 0);
 		}
@@ -198,7 +220,7 @@ int	stringtest(int function(const char *input, ...))
 	int		ret = 0, ret2 = 0, i = 0;
 	FILE	*out;
 	char 	str1[] = "Hello World";
-	char	test[11][200] =
+	char	test[12][200] =
 	{	"String 1 width 3 precision test: [%1.3s]\n",
 		"String 3 width test: [%3s]\n",
 		"String 15 width test: [%15s]\n",
@@ -209,7 +231,8 @@ int	stringtest(int function(const char *input, ...))
 		"String * (-1) width * (-1) precision: [%*.*s]\n",
 		"String * (-3) precision: [%.*s]\n",
 		"String * (0) width * (0) precision: [%*.*s]\n",
-		"Empty string test: [%s]\n"};
+		"Empty string test: [%s]\n"
+		"String with /\0/ char"};
 
 	if ((out = fopen("printf.txt", "a")) == NULL)
 		return (-1);
@@ -226,7 +249,7 @@ int	stringtest(int function(const char *input, ...))
 		fprintf(out, "Ret: %d\n", ret2);
 		i++;
 	}
-	while (i < 11)
+	while (i < 12)
 	{
 		if (i == 5)
 		{
@@ -257,6 +280,11 @@ int	stringtest(int function(const char *input, ...))
 		{
 			ret = function(test[i], "");
 			ret2 = fprintf(out, test[i], "");
+		}
+		if (i == 11)
+		{
+			ret = function(test[i], "\0");
+			ret2 = fprintf(out, test[i], "\0");
 		}
 		if (ret < 0 || ret2 < 0)
 			return (-1);
@@ -353,7 +381,7 @@ int	decimaltest(int function(const char *input, ...))
 		"Number zero pad, 5 width: [%05d], [%05d]\n",
 		"Number zero pad, left: [%-04d], [%-04d]\n",
 		"Number 5 width, precision 0 with non-zero value test: [%5.0d], [%5.0d]\n",
-		"Number precision 0 with value 0 test: [%.0d], [%.0d]\n",
+		"Number 5 width precision 0 with value 0 test: [%5.0d], [%5.0d]\n",
 		"Number 5 width, 3 precision test: [%5.3d], [%5.3d]\n",
 		"Number 5 width, 4 precision test: [%5.4d], [%5.4d]\n",
 		"Number with left, 6 width, 4 precision test: [%-6.4d], [%-6.4d]\n",
@@ -365,7 +393,7 @@ int	decimaltest(int function(const char *input, ...))
 		"Int min test, 12 width, 11 precision: [%12.11d]\n",
 		"Int max test, 12 width, 11 precision: [%12.11d]\n",
 		"Bonus - Number space flag  test: [% d], [% d]\n",
-		"Bonus - Number 5 width test: [%+5d], [%5d]\n",
+		"Bonus - Number with plus, 5 width test: [%+5d], [%+5d]\n",
 		"Bonus - Number with plus 6 width, 4 precision test: [%+6.4d], [%+6.4d]\n",
 		"Bonus - Number with space 6 width, 4 precision test: [% 6.4d], [% 6.4d]\n",
 		"Bonus - Apostrophe test with d and i: [%'d] [%'i]\n"};
@@ -444,38 +472,6 @@ int	decimaltest(int function(const char *input, ...))
 	return (0);
 }
 
-int	nulltest(int function(const char *input, ...))
-{
-	int		ret = 0, ret2 = 0, i = 0;
-	FILE	*out;
-	char	test[4][100] =
-	{	"Null basic: [%]\n",
-		"Null 5 width: [%5]\n",
-		"Null 5 width, zero pad: [%05]\n",
-		"Null 5 width, zero pad, left: [%-05]"};
-
-	if ((out = fopen("printf.txt", "a")) == NULL)
-		return (-1);
-	function("==== Null test ====\n");
-	fprintf(out, "==== Null test ====\n");
-	alarm(5);
-	while (i < 4)
-	{
-		ret = function(test[i]);
-		ret2 = fprintf(out, test[i], 0);
-		if (ret < 0 || ret2 < 0)
-			return (-1);
-		function("Ret: %d\n", ret);
-		fprintf(out, "Ret: %d\n", ret2);
-		i++;
-	}
-	alarm(0);
-	function("\n");
-	fprintf(out, "\n");
-	fclose(out);
-	return (0);
-}
-
 int	main(int ac, char **av)
 {
 	av++;
@@ -520,11 +516,6 @@ int	main(int ac, char **av)
 		if (strcmp(*av, "nstore") == 0)
 		{
 			if (ntest(ft_printf) < 0)
-				return (-1);
-		}
-		if (strcmp(*av, "null")  == 0)
-		{
-			if (nulltest(ft_printf) < 0)
 				return (-1);
 		}
 	}

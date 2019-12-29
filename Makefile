@@ -6,7 +6,7 @@
 #    By: mjiam <mjiam@student.codam.nl>               +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/12/29 14:41:08 by mjiam          #+#    #+#                 #
-#    Updated: 2019/12/29 14:41:12 by mjiam         ########   odam.nl          #
+#    Updated: 2019/12/29 14:44:05 by mjiam         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ FT_OUT 	= ft_printf.txt
 
 P_OUT 	= printf.txt
 
-TESTS 	= dec char str per hex u n ptr null
+TESTS 	= dec char str per hex u n ptr
 
 TESTALL = $(TESTS)
 
@@ -74,10 +74,6 @@ endif
 
 ifdef WITH_N
 TEST = nstore
-endif
-
-ifdef WITH_NULL
-TEST = null
 endif
 
 # COLORS
@@ -179,11 +175,6 @@ n:
 ptr:
 	@rm -f $(FT_OUT) $(P_OUT)
 	@$(MAKE) run WITH_PTR=1
-	@$(MAKE) sclean
-
-null:
-	@rm -f $(FT_OUT) $(P_OUT)
-	@$(MAKE) run WITH_NULL=1
 	@$(MAKE) sclean
 
 norm:
