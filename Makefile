@@ -6,6 +6,8 @@ SRCPATH = ../ft_printf
 
 LIB		= $(SRCPATH)/libftprintf.a
 
+LOBJ 	= $(SRCPATH)/*.o
+
 FT_OUT 	= ft_printf.txt
 
 OUT_GEN = testgen.c
@@ -91,7 +93,7 @@ GO		= 🏃‍♀️
 
 all: $(NAME)
 
-$(NAME):
+$(NAME): $(OUT_GEN) $(LIB)
 	@echo ""
 	@echo "$(CYAN)      *~*~*~*~*~* The ~ a e s t h e t i c ~ ft_printf tester *~*~*~*~*~"
 	@echo "      |                                                                |"
@@ -126,7 +128,7 @@ run: $(OUT_GEN) $(LIB)
 	@echo "$(CYAN)Running $(UC) test$(WHITE)"
 	@./$(NAME)
 
-$(LIB): 
+$(LIB):
 	@cd $(SRCPATH) && $(MAKE)
 
 dec:
@@ -221,7 +223,7 @@ sfclean: sclean
 re:
 	@echo "$(TOILET) $(PINK)Once more from the top $(TOILET)"
 	@$(MAKE) fclean
-	@$(MAKE) tests
+	@$(MAKE)
 
 .PHONY: all clean fclean re
 
