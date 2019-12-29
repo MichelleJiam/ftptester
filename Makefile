@@ -197,7 +197,7 @@ pikasad: $(TESTALL)
 
 clean:
 	@echo "$(SPONGE) $(WHITE)Cleaning $(SPONGE)"
-	@rm -f $(NAME)
+	@rm -f $(NAME) $(OUT)
 	@echo "$(GO) $(GREEN)Heading to the library $(GO)"
 	@cd $(SRCPATH) && $(MAKE) clean
 
@@ -211,7 +211,7 @@ fclean: clean
 # silent cleaning
 
 sclean:
-	@rm -f $(NAME)
+	@rm -f $(NAME) $(OUT)
 	@cd $(SRCPATH) && $(MAKE) clean
 
 sfclean: sclean
