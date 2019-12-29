@@ -1,16 +1,30 @@
-NAME 	= test
+# **************************************************************************** #
+#                                                                              #
+#                                                         ::::::::             #
+#    Makefile                                           :+:    :+:             #
+#                                                      +:+                     #
+#    By: mjiam <mjiam@student.codam.nl>               +#+                      #
+#                                                    +#+                       #
+#    Created: 2019/12/29 14:41:08 by mjiam          #+#    #+#                 #
+#    Updated: 2019/12/29 14:41:12 by mjiam         ########   odam.nl          #
+#                                                                              #
+# **************************************************************************** #
 
-OUT 	= functionoutput
+NAME 	= test
 
 SRCPATH = ../ft_printf
 
 LIB		= $(SRCPATH)/libftprintf.a
 
-LOBJ 	= $(SRCPATH)/*.o
-
-FT_OUT 	= ft_printf.txt
+OUT 	= functionoutput
 
 OUT_GEN = testgen.c
+
+TESTER 	= test.c
+
+HEADER 	= test.h
+
+FT_OUT 	= ft_printf.txt
 
 P_OUT 	= printf.txt
 
@@ -19,10 +33,6 @@ TESTS 	= dec char str per hex u n ptr null
 TESTALL = $(TESTS)
 
 UC 		= $(shell echo $(TEST) | tr '[:lower:]' '[:upper:]')
-
-TESTER 	= test.c
-
-HEADER 	= test.h
 
 CFLAGS 	= -Wall -Wextra -Werror
 
