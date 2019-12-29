@@ -6,7 +6,7 @@
 #    By: mjiam <mjiam@student.codam.nl>               +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/12/29 14:41:08 by mjiam          #+#    #+#                 #
-#    Updated: 2019/12/29 14:44:05 by mjiam         ########   odam.nl          #
+#    Updated: 2019/12/29 18:54:01 by mjiam         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ FT_OUT 	= ft_printf.txt
 
 P_OUT 	= printf.txt
 
-TESTS 	= dec char str per hex u n ptr
+TESTS 	= dec char str per hex u ptr n mod
 
 TESTALL = $(TESTS)
 
@@ -76,6 +76,10 @@ ifdef WITH_N
 TEST = nstore
 endif
 
+ifdef WITH_MOD
+TEST = mod
+endif
+
 # COLORS
 BLUE	= \x1b[34;01m
 CYAN	= \x1b[36;01m
@@ -112,6 +116,7 @@ $(NAME): $(OUT_GEN) $(LIB)
 	@echo "      |    - make u : run unsigned decimal tests                       |"
 	@echo "      |    - make hex : run hex tests                                  |"
 	@echo "      |    - make n : run n tests                                      |"
+	@echo "      |    - make mod : run mod tests                                  |"
 	@echo "      |    - make open : open output files                             |"
 	@echo "      |    - make norm : run norminette                                |"
 	@echo "      |    - make pikachu : surprise                                   |"
@@ -175,6 +180,11 @@ n:
 ptr:
 	@rm -f $(FT_OUT) $(P_OUT)
 	@$(MAKE) run WITH_PTR=1
+	@$(MAKE) sclean
+
+mod:
+	@rm -f $(FT_OUT) $(P_OUT)
+	@$(MAKE) run WITH_MOD=1
 	@$(MAKE) sclean
 
 norm:

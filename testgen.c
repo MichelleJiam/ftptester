@@ -6,7 +6,7 @@
 /*   By: mjiam <mjiam@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/20 14:12:52 by mjiam          #+#    #+#                */
-/*   Updated: 2019/12/29 16:06:48 by mjiam         ########   odam.nl         */
+/*   Updated: 2019/12/29 19:25:11 by mjiam         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,70 @@ int	ptrtest(int function(const char *input, ...))
 	{
 		ret = function(test[i], &g_var);
 		ret2 = fprintf(out, test[i], &g_var);
+		if (ret < 0 || ret2 < 0)
+			return (-1);
+		function("Ret: %d\n", ret);
+		fprintf(out, "Ret: %d\n", ret2);
+		i++;
+	}
+	alarm(0);
+	function("\n");
+	fprintf(out, "\n");
+	fclose(out);
+	return (0);
+}
+
+int modtest(int function(const char *input, ...))
+{
+	int		ret = 0, ret2 = 0, i = 0;
+	FILE	*out;
+	char	test[18][100] =
+	{	"d with h, 20 width, value int max: [%20hd]\n",
+		"d with h, left align, 20 width, value int max: [%-20hd]\n",
+		"d with h, left align, 20 width, value int min: [%-20hd]\n",
+		"d with h, 20 width, value short max: [%20hd]\n",
+		"d with hh, 20 width, value int max: [%20hhd]\n",
+		"d with l, 20 width, value int max: [%20ld]\n",
+		"d with l, 20 width, value int min: [%20ld]\n",
+		"d with l, 20 width, value u long max: [%20ld]\n",
+		"d with ll, 20 width, value int max: [%20lld]\n",
+		"d with ll, 20 width, value u long max: [%20lld]\n",
+		"u with l, 42 width, value u long max: [%42lu]\n",
+		"u with ll, 42 width, value u long max: [%42llu]\n",
+		"u with h, 20 width, value u long max: [%20hu]\n",
+		"u with hh, 20 width, value u long max: [%20hhu]\n",
+		"x with l, 20 width, value u long max: [%20lx]\n",
+		"x with ll, 20 width, value u long max: [%20llx]\n",
+		"x with h, 20 width, value u long max: [%20hx]\n",
+		"x with hh, 20 width, value u long max: [%20hhx]\n"};
+
+	if ((out = fopen("printf.txt", "a")) == NULL)
+		return (-1);
+	function("==== Modifier test ====\n");
+	fprintf(out, "==== Modifier test ====\n");
+	alarm(5);
+	while (i < 18)
+	{
+		if (i == 2 || i == 6)
+		{
+			ret = function(test[i], INT_MIN);
+			ret2 = fprintf(out, test[i], INT_MIN);
+		}
+		else if (i == 3)
+		{
+			ret = function(test[i], SHRT_MAX);
+			ret2 = fprintf(out, test[i], SHRT_MAX);
+		}
+		else if (i == 7 || i > 8)
+		{
+			ret = function(test[i], ULONG_MAX);
+			ret2 = fprintf(out, test[i], ULONG_MAX);
+		}
+		else
+		{
+			ret = function(test[i], INT_MAX);
+			ret2 = fprintf(out, test[i], INT_MAX);
+		}
 		if (ret < 0 || ret2 < 0)
 			return (-1);
 		function("Ret: %d\n", ret);
@@ -376,7 +440,7 @@ int	decimaltest(int function(const char *input, ...))
 {
 	int		ret = 0, ret2 = 0, i = 0;
 	FILE	*out;
-	char	test[20][100] =
+	char	test[22][100] =
 	{	"Number precision 4 test: [%.4d], [%.4d]\n",
 		"Number zero pad, 5 width: [%05d], [%05d]\n",
 		"Number zero pad, left: [%-04d], [%-04d]\n",
@@ -396,7 +460,9 @@ int	decimaltest(int function(const char *input, ...))
 		"Bonus - Number with plus, 5 width test: [%+5d], [%+5d]\n",
 		"Bonus - Number with plus 6 width, 4 precision test: [%+6.4d], [%+6.4d]\n",
 		"Bonus - Number with space 6 width, 4 precision test: [% 6.4d], [% 6.4d]\n",
-		"Bonus - Apostrophe test with d and i: [%'d] [%'i]\n"};
+		"Bonus - Apostrophe test with d and i: [%'d] [%'i]\n",
+		"Bonus - Apostrophe test with less than 3 figures: [%'d] [%'i]\n",
+		"Bonus - Number with plus, 0 precision, value zero: [%+.d] [%+.i]\n"};
 
 	if ((out = fopen("printf.txt", "a")) == NULL)
 		return (-1);
@@ -447,12 +513,17 @@ int	decimaltest(int function(const char *input, ...))
 		fprintf(out, "Ret: %d\n", ret2);
 		i++;
 	}
-	while (i < 20)
+	while (i < 22)
 	{
 		if (i == 19)
 		{
 			ret = function(test[i], INT_MAX, INT_MAX);
 			ret2 = fprintf(out, test[i], INT_MAX, INT_MAX);
+		}
+		else if (i == 21)
+		{
+			ret = function(test[i], 0, 0);
+			ret2 = fprintf(out, test[i], 0, 0);
 		}
 		else
 		{
@@ -516,6 +587,11 @@ int	main(int ac, char **av)
 		if (strcmp(*av, "nstore") == 0)
 		{
 			if (ntest(ft_printf) < 0)
+				return (-1);
+		}
+		if (strcmp(*av, "mod") == 0)
+		{
+			if (modtest(ft_printf) < 0)
 				return (-1);
 		}
 	}
