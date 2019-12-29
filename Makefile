@@ -12,7 +12,7 @@ OUT_GEN = testgen.c
 
 P_OUT 	= printf.txt
 
-TESTS 	= dec char str per hex u n ptr
+TESTS 	= dec char str per hex u n ptr null
 
 TESTALL = $(TESTS)
 
@@ -62,6 +62,10 @@ endif
 
 ifdef WITH_N
 TEST = nstore
+endif
+
+ifdef WITH_NULL
+TEST = null
 endif
 
 # COLORS
@@ -122,57 +126,74 @@ run: $(OUT_GEN) $(LIB)
 	@echo "$(CYAN)Running $(UC) test$(WHITE)"
 	@./$(NAME)
 
-$(LIB):
+$(LIB): 
 	@cd $(SRCPATH) && $(MAKE)
 
-dec: sfclean
+dec:
+	@rm -f $(FT_OUT) $(P_OUT)
 	@$(MAKE) run WITH_DEC=1
 	@$(MAKE) sclean
 
-char: sfclean
+char:
+	@rm -f $(FT_OUT) $(P_OUT)
 	@$(MAKE) run WITH_CHAR=1
 	@$(MAKE) sclean
 
-str: sfclean
+str:
+	@rm -f $(FT_OUT) $(P_OUT)
 	@$(MAKE) run WITH_STR=1
 	@$(MAKE) sclean
 
-per: sfclean
+per:
+	@rm -f $(FT_OUT) $(P_OUT)
 	@$(MAKE) run WITH_PER=1
 	@$(MAKE) sclean
 
-hex: sfclean
+hex:
+	@rm -f $(FT_OUT) $(P_OUT)
 	@$(MAKE) run WITH_HEX=1
 	@$(MAKE) sclean
 
-u: sfclean
+u:
+	@rm -f $(FT_OUT) $(P_OUT)
 	@$(MAKE) run WITH_UINT=1
 	@$(MAKE) sclean
 
-n: sfclean
+n:
+	@rm -f $(FT_OUT) $(P_OUT)
 	@$(MAKE) run WITH_N=1
 	@$(MAKE) sclean
 
-ptr: sfclean
+ptr:
+	@rm -f $(FT_OUT) $(P_OUT)
 	@$(MAKE) run WITH_PTR=1
 	@$(MAKE) sclean
 
-open: $(P_OUT) $(FT_OUT)
-	@open $(P_OUT) $(FT_OUT)
+null:
+	@rm -f $(FT_OUT) $(P_OUT)
+	@$(MAKE) run WITH_NULL=1
+	@$(MAKE) sclean
 
 norm:
 	@norminette $(SRC)
+
+open: $(P_OUT) $(FT_OUT)
+	@open $(P_OUT) $(FT_OUT)
 
 pass:
 	@echo ""
 	@echo "$(YAY) $(YELLOW)You Passed! $(YAY)"
 	@echo ""
 
+# run tests without Pikachu picture
+
 pikasad: $(TESTALL)
 	@echo ""
 	@echo "$(YELLOW)You passed."
 	@echo "But success without friends is a lonely path."
 	@echo ""
+
+# normal cleaning
 
 clean:
 	@echo "$(SPONGE) $(WHITE)Cleaning $(SPONGE)"
