@@ -5,7 +5,7 @@ Unit tester for 42's ft_printf project (per 2019 curriculum).
 Current tests:
 - Conversion: cspdiuxX%n
 
-Bonus tests (’ # space +)  are currently mixed in with basic tests. These results are prefixed with "Bonus".
+Bonus tests (’ # space +)  are currently mixed in with basic tests. These results are prefixed with "Bonus". You can ignore these if you're not doing bonus.
 
 ## Installation
 
