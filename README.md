@@ -23,6 +23,7 @@ git clone https://github.com/MichelleJiam/ftptester.git
 From the ftptester repo, run ```make``` to see options.
 
 Run ```make tests``` to run all tests, except modifer and n. Or ```make (conversion)``` for specific conversions.
+
 Modifier and n bonuses must be run separated via ```make mod``` & ```make n```.
 
 If changes are made to your source files, please run ```make re``` to recompile.
