@@ -6,7 +6,7 @@
 #    By: mjiam <mjiam@student.codam.nl>               +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/12/29 14:41:08 by mjiam          #+#    #+#                 #
-#    Updated: 2019/12/29 18:54:01 by mjiam         ########   odam.nl          #
+#    Updated: 2020/01/03 20:53:05 by mjiam         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ FT_OUT 	= ft_printf.txt
 
 P_OUT 	= printf.txt
 
-TESTS 	= dec char str per hex u ptr n mod
+TESTS 	= dec char str per hex u ptr
 
 TESTALL = $(TESTS)
 
