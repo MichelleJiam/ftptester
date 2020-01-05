@@ -120,14 +120,11 @@ $(NAME): $(OUT_GEN) $(LIB)
 	@echo "      |    - make open : open output files                             |"
 	@echo "      |    - make norm : run norminette                                |"
 	@echo "      |    - make pikachu : surprise                                   |"
-	@echo "      |    - make pikasad : run all tests without Pikachu              |"
 	@echo "      |                                                                |"
 	@echo "      ~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*"
 	@echo ""
 
 tests: $(LIB) $(TESTALL)
-	@$(MAKE) pikachu
-	@$(MAKE) pass
 
 run: $(OUT_GEN) $(LIB)
 	@echo "$(PINK)Compiling files"
@@ -192,19 +189,6 @@ norm:
 
 open: $(P_OUT) $(FT_OUT)
 	@open $(P_OUT) $(FT_OUT)
-
-pass:
-	@echo ""
-	@echo "$(YAY) $(YELLOW)You Passed! $(YAY)"
-	@echo ""
-
-# run tests without Pikachu picture
-
-pikasad: $(TESTALL)
-	@echo ""
-	@echo "$(YELLOW)You passed."
-	@echo "But success without friends is a lonely path."
-	@echo ""
 
 # normal cleaning
 
