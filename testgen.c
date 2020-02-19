@@ -410,7 +410,7 @@ int	chartest(int function(const char *input, ...))
 	char	test[6][100] =
 	{   "0. Basic char test: [%c]\n",
 		"1. Char 5 width: [%5c]\n",
-		"2. Char zero pad, 5 width: [%05c]\n",
+		"2. Undefined behaviour - Char zero pad, 5 width: [%05c]\n",
 		"3. Char left align, 5 width: [%-5c]\n",
 		"4. Char test with 2 width, null value: [%2c]\n",
 		"5. Char test with null [%c] and text after\n"};
