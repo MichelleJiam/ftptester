@@ -81,13 +81,13 @@ TEST = mod
 endif
 
 # COLORS
-BLUE	= \x1b[34;01m
-CYAN	= \x1b[36;01m
-PINK	= \x1b[35;01m
-GREEN	= \x1b[32;01m
-WHITE	= \x1b[37;01m
-YELLOW	= \x1b[33;01m
-RED		= \x1b[31;01m
+BLUE	= \033[38;5;27m
+CYAN	= \033[38;5;51m
+PINK	= \033[38;5;211m
+GREEN	= \033[38;5;46m
+WHITE	= \033[38;5;15m
+YELLOW	= \033[38;5;220m
+RED	= \033[38;5;160m
 NOCOL	= \x1b[0m
 
 # SYMBOLS
